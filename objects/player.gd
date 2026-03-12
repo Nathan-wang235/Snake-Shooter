@@ -154,6 +154,9 @@ func handle_rotation(xRot: float, yRot: float, isController: bool, delta: float 
 
 func handle_gravity(delta):
 	gravity += 20 * delta
+
+	if gravity < 0 and is_on_ceiling():
+		gravity = 0
 	
 	if gravity > 0 and is_on_floor():
 		jumps_remaining = number_of_jumps
