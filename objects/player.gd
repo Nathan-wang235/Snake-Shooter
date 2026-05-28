@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export_subgroup("Properties")
 @export var movement_speed = 5
+@export var running_speed = 7
 @export_range(0, 100) var number_of_jumps: int = 2
 @export var jump_strength = 8
 
@@ -114,8 +115,12 @@ func handle_controls(delta):
 		input_mouse = Vector2.ZERO
 	
 	# Movement
+	
 	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
+	if Input.is_action_pressed("sprint"):
+		movement_velocity = Vector3(input.x, 0, input.y).normalized() * running_speed
+	else:
+		movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
 	
 	# Handle Controller Rotation
 	var rotation_input := Input.get_vector("camera_right", "camera_left", "camera_down", "camera_up")
