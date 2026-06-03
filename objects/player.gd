@@ -9,6 +9,8 @@ extends CharacterBody3D
 @export_subgroup("Weapons")
 @export var weapons: Array[Weapon] = []
 
+var test
+
 var weapon: Weapon
 var weapon_index := 0
 
