@@ -115,8 +115,6 @@ func _input(event):
 		input_mouse = event.relative / mouse_sensitivity
 		handle_rotation(event.relative.x, event.relative.y, false)
 
-		
-
 func handle_controls(delta):
 	# Mouse capture
 	if Input.is_action_just_pressed("mouse_capture"):

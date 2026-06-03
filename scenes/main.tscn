@@ -182,4 +182,8 @@ transform = Transform3D(1.73205, 0, 1, 0, 2, 0, -1, 0, 1.73205, -30.1261, 2.4268
 [node name="cube4" parent="Decoration" unique_id=1128059590 instance=ExtResource("10_5ksau")]
 transform = Transform3D(1.12202, 1.39419, -2.40776, 1.53922, 1.85165, 1.78946, 2.31773, -1.90463, -0.0227883, -0.881504, 13.0297, -30.1859)
 
+[node name="effects" type="Node" parent="." unique_id=1584198126]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="effects" unique_id=1382836120]
+
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
