@@ -110,6 +110,10 @@ func _process(delta):
 		get_tree().reload_current_scene()
 
 # Mouse movement
+func _input(event):
+	if event is InputEventMouseMotion and mouse_captured:
+		input_mouse = event.relative / mouse_sensitivity
+		handle_rotation(event.relative.x, event.relative.y, false)
 
 		
 
