@@ -20,6 +20,11 @@ var mouse_captured := true
 var movement_velocity: Vector3
 var rotation_target: Vector3
 
+var crouch_speed := 2.5
+var crouch_camera_offset := -0.8
+
+var is_crouching := false
+
 var input_mouse: Vector2
 
 var health: int = 100
@@ -55,6 +60,7 @@ func _ready():
 func _process(delta):
 	# Handle functions
 	handle_controls(delta)
+	is_crouching = Input.is_action_pressed("crouch")
 	handle_gravity(delta)
 	
 	# Movement
@@ -79,10 +85,16 @@ func _process(delta):
 	if is_on_floor():
 		if abs(velocity.x) > 1 or abs(velocity.z) > 1:
 			sound_footsteps.stream_paused = false
-	
+			
 	# Landing after jump or falling
 	
-	camera.position.y = lerp(camera.position.y, 0.0, delta * 5)
+	var target_camera_y := 0.0
+	
+	if is_crouching:
+		
+		target_camera_y = crouch_camera_offset
+		
+	camera.position.y = lerp(camera.position.y, target_camera_y, delta * 3)
 	
 	if is_on_floor() and gravity > 1 and !previously_floored: # Landed
 		Audio.play("sounds/land.ogg")
@@ -97,10 +109,7 @@ func _process(delta):
 
 # Mouse movement
 
-func _input(event):
-	if event is InputEventMouseMotion and mouse_captured:
-		input_mouse = event.relative / mouse_sensitivity
-		handle_rotation(event.relative.x, event.relative.y, false)
+		
 
 func handle_controls(delta):
 	# Mouse capture
@@ -117,7 +126,14 @@ func handle_controls(delta):
 	# Movement
 	
 	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	
+	var speed: float = movement_speed
+	
 	if Input.is_action_pressed("sprint"):
+		speed = running_speed
+	elif is_crouching:
+		speed = crouch_speed
+		
 		movement_velocity = Vector3(input.x, 0, input.y).normalized() * running_speed
 	else:
 		movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
