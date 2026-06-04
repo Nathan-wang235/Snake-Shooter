@@ -1,11 +1,11 @@
 extends Node3D
 
 @export var player: Node3D
-
+var rng = RandomNumberGenerator.new()
 @onready var raycast = $RayCast
 @onready var muzzle_a = $MuzzleA
 @onready var muzzle_b = $MuzzleB
-
+var moving_constant = float(rng.randf_range(0.0, 10.0))
 var health := 100
 var time := 0.0
 var target_position: Vector3
@@ -16,11 +16,11 @@ var destroyed := false
 func _ready():
 	target_position = position
 
-
 func _process(delta):
+	var moving_constant = float(rng.randf_range(0.0, 10.0))
 	self.look_at(player.position + Vector3(0, 0.5, 0), Vector3.UP, true)  # Look at player
 	target_position.y += (cos(time * 5) * 1) * delta  # Sine movement (up and down)
-
+	target_position.x += (cos(time * 5 )) * moving_constant * delta  # Sine movement (left and right)
 	time += delta
 
 	position = target_position
