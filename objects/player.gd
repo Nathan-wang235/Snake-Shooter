@@ -9,8 +9,6 @@ extends CharacterBody3D
 @export_subgroup("Weapons")
 @export var weapons: Array[Weapon] = []
 
-var test
-
 var weapon: Weapon
 var weapon_index := 0
 
@@ -29,8 +27,11 @@ var is_crouching := false
 
 var input_mouse: Vector2
 
-var health: int = 100
+var health: int = 10000
+var current_ammo: int 
+var reserve_ammo: int
 var gravity := 0.0
+
 
 var previously_floored := false
 
@@ -197,58 +198,69 @@ func action_jump():
 # Shooting
 
 func action_shoot():
-	if Input.is_action_pressed("shoot"):
-		if !blaster_cooldown.is_stopped(): return # Cooldown for shooting
-		
-		Audio.play(weapon.sound_shoot)
-		
-		# Set muzzle flash position, play animation
-		
-		muzzle.play("default")
-		
-		muzzle.rotation_degrees.z = randf_range(-45, 45)
-		muzzle.scale = Vector3.ONE * randf_range(0.40, 0.75)
-		muzzle.position = container.position - weapon.muzzle_position
-		
-		blaster_cooldown.start(weapon.cooldown)
-		
-		# Shoot the weapon, amount based on shot count
-		
-		for n in weapon.shot_count:
-			raycast.target_position.x = randf_range(-weapon.spread, weapon.spread)
-			raycast.target_position.y = randf_range(-weapon.spread, weapon.spread)
+		if Input.is_action_pressed("shoot"):
+			print("shoot pressed")
 			
-			raycast.force_raycast_update()
+		if Input.is_action_pressed("shoot"):
+			if !blaster_cooldown.is_stopped(): return # Cooldown for shooting
 			
-			if !raycast.is_colliding(): continue # Don't create impact when raycast didn't hit
+			if current_ammo <= 0:
+				return
+				
+			current_ammo -=  1
+			print(current_ammo)
+				
+			Audio.play(weapon.sound_shoot)
 			
-			var collider = raycast.get_collider()
+			muzzle.play("default")
 			
-			# Hitting an enemy
+			# Set muzzle flash position, play animation
 			
-			if collider.has_method("damage"):
-				collider.damage(weapon.damage)
+			muzzle.play("default")
 			
-			# Creating an impact animation
+			muzzle.rotation_degrees.z = randf_range(-45, 45)
+			muzzle.scale = Vector3.ONE * randf_range(0.40, 0.75)
+			muzzle.position = container.position - weapon.muzzle_position
 			
-			var impact = preload("res://objects/impact.tscn")
-			var impact_instance = impact.instantiate()
+			blaster_cooldown.start(weapon.cooldown)
 			
-			impact_instance.play("shot")
+			# Shoot the weapon, amount based on shot count
 			
-			get_tree().root.add_child(impact_instance)
-			
-			impact_instance.position = raycast.get_collision_point() + (raycast.get_collision_normal() / 10)
-			impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true)
-			
-		var knockback = random_vec2(weapon.min_knockback, weapon.max_knockback)
-		# print('knockback', knockback)
-		container.position.z += 0.25 # Knockback of weapon visual
-		camera.rotation.x += knockback.x # Knockback of camera
-		rotation.y += knockback.y
-		rotation_target.x += knockback.x
-		rotation_target.y += knockback.y
-		movement_velocity += Vector3(0, 0, weapon.knockback) # Knockback
+			for n in weapon.shot_count:
+				raycast.target_position.x = randf_range(-weapon.spread, weapon.spread)
+				raycast.target_position.y = randf_range(-weapon.spread, weapon.spread)
+				
+				raycast.force_raycast_update()
+				
+				if !raycast.is_colliding(): continue # Don't create impact when raycast didn't hit
+				
+				var collider = raycast.get_collider()
+				
+				# Hitting an enemy
+				
+				if collider.has_method("damage"):
+					collider.damage(weapon.damage)
+				
+				# Creating an impact animation
+				
+				var impact = preload("res://objects/impact.tscn")
+				var impact_instance = impact.instantiate()
+				
+				impact_instance.play("shot")
+				
+				get_tree().root.add_child(impact_instance)
+				
+				impact_instance.position = raycast.get_collision_point() + (raycast.get_collision_normal() / 10)
+				impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true)
+				
+			var knockback = random_vec2(weapon.min_knockback, weapon.max_knockback)
+			# print('knockback', knockback)
+			container.position.z += 0.25 # Knockback of weapon visual
+			camera.rotation.x += knockback.x # Knockback of camera
+			rotation.y += knockback.y
+			rotation_target.x += knockback.x
+			rotation_target.y += knockback.y
+			movement_velocity += Vector3(0, 0, weapon.knockback) # Knockback
 
 # Toggle between available weapons (listed in 'weapons')
 
@@ -273,6 +285,9 @@ func initiate_change_weapon(index):
 
 func change_weapon():
 	weapon = weapons[weapon_index]
+	
+	current_ammo = weapon.magazine_size
+	reserve_ammo = weapon.reserve_ammo
 
 	# Step 1. Remove previous weapon model(s) from container
 	

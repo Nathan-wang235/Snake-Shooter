@@ -15,6 +15,9 @@ class_name Weapon
 @export_range(1, 5) var shot_count: int = 1 # Amount of shots
 @export_range(0, 50) var knockback: int = 20 # Amount of knockback
 
+@export var magazine_size: int = 30
+@export var reserve_ammo: int = 90
+@export var reload_time: float = 1.5
 @export var min_knockback: Vector2 = Vector2(0.001, 0.001) # x for vertical knockback, y for horizontal knockback
 @export var max_knockback: Vector2 = Vector2(0.0025, 0.002) # x for vertical knockback, y for horizontal knockback
 
