@@ -241,14 +241,14 @@ func action_shoot():
 			impact_instance.position = raycast.get_collision_point() + (raycast.get_collision_normal() / 10)
 			impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true)
 			
-		var knockback = random_vec2(weapon.min_knockback, weapon.max_knockback)
-		# print('knockback', knockback)
+		var knockback = random_vec2(weapon.min_knockback, weapon.max_knockback) * 0.1
+		print('knockback', knockback)
 		container.position.z += 0.25 # Knockback of weapon visual
-		camera.rotation.x += knockback.x # Knockback of camera
-		rotation.y += knockback.y
-		rotation_target.x += knockback.x
-		rotation_target.y += knockback.y
-		movement_velocity += Vector3(0, 0, weapon.knockback) # Knockback
+		camera.rotation.x += knockback.x * 0.55 # Knockback of camera
+		rotation.y += knockback.y * 0.35
+		rotation_target.x += knockback.x * 0.35 
+		rotation_target.y += knockback.y * 0.35
+		movement_velocity += Vector3(0, 0, weapon.knockback * 0.35 ) # Knockback
 
 # Toggle between available weapons (listed in 'weapons')
 
