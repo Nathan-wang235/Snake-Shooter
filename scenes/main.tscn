@@ -6,7 +6,9 @@
 [ext_resource type="FontFile" uid="uid://biqtga8moh7ah" path="res://fonts/lilita_one_regular.ttf" id="3_w27de"]
 [ext_resource type="PackedScene" uid="uid://dpm3l05d7fu35" path="res://objects/platform.tscn" id="5_3s40e"]
 [ext_resource type="PackedScene" uid="uid://r7rt7pth4u7o" path="res://objects/wall_low.tscn" id="5_6vel1"]
+[ext_resource type="PackedScene" uid="uid://dxsyd8bbi4s31" path="res://scenes/enemies_spawner.tscn" id="6_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://c71evdjblk5wp" path="res://objects/wall_high.tscn" id="7_cabne"]
+[ext_resource type="Script" uid="uid://1tuil8mckayg" path="res://scenes/enemies_spawner.gd" id="7_trceg"]
 [ext_resource type="PackedScene" uid="uid://bvx5cvigosg0s" path="res://objects/platform_large_grass.tscn" id="7_wggef"]
 [ext_resource type="PackedScene" uid="uid://d2g78tpqbyf5g" path="res://objects/enemy.tscn" id="8_7ty2f"]
 [ext_resource type="PackedScene" uid="uid://oqfhfp1a80qd" path="res://objects/cloud.tscn" id="10_5ksau"]
@@ -106,6 +108,14 @@ player = NodePath("../../Player")
 transform = Transform3D(-0.93451524, 0.0006687252, 0.35592252, 0.00071558513, 1, 0, -0.35592243, 0.0002546928, -0.9345155, -9.420036, -2.202224, 10.300521)
 player = NodePath("../../Player")
 
+[node name="enemies_spawner" parent="Enemies" unique_id=1854702604 node_paths=PackedStringArray("player_node") instance=ExtResource("6_eb6dy")]
+script = ExtResource("7_trceg")
+enemy_prefab = ExtResource("8_7ty2f")
+player_node = NodePath("../../Player")
+
+[node name="Timer" type="Timer" parent="Enemies/enemies_spawner" unique_id=813231358]
+autostart = true
+
 [node name="Level" type="Node" parent="." unique_id=1748836644]
 
 [node name="wall-low" parent="Level" unique_id=1331411824 instance=ExtResource("5_6vel1")]
@@ -187,3 +197,4 @@ transform = Transform3D(1.12202, 1.39419, -2.40776, 1.53922, 1.85165, 1.78946, 2
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="effects" unique_id=1382836120]
 
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
+[connection signal="timeout" from="Enemies/enemies_spawner/Timer" to="Enemies/enemies_spawner" method="_on_timer_timeout"]

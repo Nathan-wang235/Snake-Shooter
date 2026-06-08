@@ -27,7 +27,7 @@ var is_crouching := false
 
 var input_mouse: Vector2
 
-var health: int = 10000
+var health: int = 1000000000
 var current_ammo: int 
 var reserve_ammo: int
 var gravity := 0.0
@@ -149,8 +149,8 @@ func handle_controls(delta):
 		handle_rotation(rotation_input.x, rotation_input.y, true, delta)
 	
 	# Shooting
-	
-	action_shoot()
+	if Input.is_action_just_pressed("shoot"):
+		action_shoot()
 	
 	# Jumping
 	

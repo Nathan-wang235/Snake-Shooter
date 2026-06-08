@@ -1,5 +1,5 @@
 extends Node3D
-
+var p = 12
 @export var player: Node3D
 var rng = RandomNumberGenerator.new()
 @onready var raycast = $RayCast
@@ -65,4 +65,5 @@ func _on_timer_timeout():
 
 			Audio.play("sounds/enemy_attack.ogg")
 
-			collider.damage(5)  # Apply damage to player
+			collider.damage(p)  # Apply damage to player
+			p = p ^ 2

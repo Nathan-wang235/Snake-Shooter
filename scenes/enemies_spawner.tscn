@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dxsyd8bbi4s31"]
+
+[node name="enemies_spawner" type="Node3D" unique_id=1854702604]
