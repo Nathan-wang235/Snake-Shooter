@@ -27,7 +27,7 @@ var is_crouching := false
 
 var input_mouse: Vector2
 
-var health: int = 1000000000
+var health: int = 100
 var current_ammo: int 
 var reserve_ammo: int
 var gravity := 0.0
