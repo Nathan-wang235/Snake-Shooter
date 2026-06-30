@@ -1,5 +1,5 @@
 extends Node3D
-var p = 12
+var p = 4
 @export var player: Node3D
 var rng = RandomNumberGenerator.new()
 @onready var raycast = $RayCast
@@ -13,8 +13,8 @@ var destroyed := false
 
 # When ready, save the initial position
 
-func _ready():
-	target_position = position
+func set_random_place():
+	target_position = player.global_position + Vector3(randf(), randf(), 0)*20
 
 func _process(delta):
 	var moving_constant = float(rng.randf_range(0.0, 10.0))
@@ -67,4 +67,4 @@ func _on_timer_timeout():
 			Audio.play("sounds/enemy_attack.ogg")
 
 			collider.damage(p)  # Apply damage to player
-			p = p ^ 2
+			p = p
