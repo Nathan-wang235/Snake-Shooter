@@ -27,7 +27,7 @@ var is_crouching := false
 
 var input_mouse: Vector2
 
-var health: int = 1000000000
+var health: int = 100
 var current_ammo: int 
 var reserve_ammo: int
 var gravity := 0.0
@@ -49,7 +49,8 @@ signal health_updated
 @onready var container = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Container
 @onready var sound_footsteps = $SoundFootsteps
 @onready var blaster_cooldown = $Cooldown
-
+@onready var ammo_label = $"../HUD/AmmoLabel"
+@onready var game_over_screen = $"../gameoverUI"
 @export var crosshair: TextureRect
 
 # Functions
@@ -77,6 +78,7 @@ func _process(delta):
 	
 	velocity = applied_velocity
 	move_and_slide()
+	
 	
 	# Rotation 
 	container.position = lerp(container.position, container_offset - (basis.inverse() * applied_velocity / 30), delta * 10)
@@ -151,6 +153,9 @@ func handle_controls(delta):
 	# Shooting
 	if Input.is_action_just_pressed("shoot"):
 		action_shoot()
+		
+	if Input.is_action_just_pressed("reload"):
+		action_reload()
 	
 	# Jumping
 	
@@ -208,6 +213,7 @@ func action_shoot():
 				return
 				
 			current_ammo -=  1
+			update_ammo_ui()
 			print(current_ammo)
 				
 			Audio.play(weapon.sound_shoot)
@@ -264,6 +270,21 @@ func action_shoot():
 		rotation_target.x += knockback.x * 0.35 
 		rotation_target.y += knockback.y * 0.35
 		movement_velocity += Vector3(0, 0, weapon.knockback * 0.35 ) # Knockback
+		
+func action_reload():
+	if current_ammo == weapon.magazine_size:
+		return
+	if reserve_ammo <= 0:
+		return
+	
+	var ammo_needed = weapon.magazine_size - current_ammo
+	
+	var ammo_to_load = min(ammo_needed, reserve_ammo)
+	
+	current_ammo += ammo_to_load
+	reserve_ammo -= ammo_to_load
+	
+	update_ammo_ui()
 
 # Toggle between available weapons (listed in 'weapons')
 
@@ -291,6 +312,7 @@ func change_weapon():
 	
 	current_ammo = weapon.magazine_size
 	reserve_ammo = weapon.reserve_ammo
+	update_ammo_ui()
 
 	# Step 1. Remove previous weapon model(s) from container
 	
@@ -315,14 +337,22 @@ func change_weapon():
 	raycast.target_position = Vector3(0, 0, -1) * weapon.max_distance
 	crosshair.texture = weapon.crosshair
 
+func update_ammo_ui():
+		ammo_label.text = "%d / %d" % [current_ammo, reserve_ammo]
 func damage(amount):
 	health -= amount
 	health_updated.emit(health) # Update health on HUD
 	
-	if health < 0:
-		get_tree().reload_current_scene() # Reset when out of health
+	if health <= 0:
+		game_over_screen.visible = true
+		get_tree().paused = true # Reset when out of health
 
 # Create a random knockback vector
 static func random_vec2(_min: Vector2, _max: Vector2) -> Vector2:
 	var _sign = -1 if randi() % 2 == 0 else 1
 	return Vector2(randf_range(_min.x, _max.x), randf_range(_min.y, _max.y) * _sign)
+
+func _on_restart_button_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+	

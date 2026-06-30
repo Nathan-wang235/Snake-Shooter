@@ -35,6 +35,7 @@ func damage(amount):
 	if health <= 0 and !destroyed:
 		destroy()
 
+
 # Destroy the enemy when out of health
 
 func destroy():

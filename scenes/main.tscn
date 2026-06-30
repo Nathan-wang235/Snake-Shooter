@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bvx5cvigosg0s" path="res://objects/platform_large_grass.tscn" id="7_wggef"]
 [ext_resource type="PackedScene" uid="uid://d2g78tpqbyf5g" path="res://objects/enemy.tscn" id="8_7ty2f"]
 [ext_resource type="PackedScene" uid="uid://oqfhfp1a80qd" path="res://objects/cloud.tscn" id="10_5ksau"]
+[ext_resource type="Script" uid="uid://c3b1l0a8ou3h8" path="res://scenes/gameover_ui.gd" id="13_trceg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fpmwk"]
 font = ExtResource("3_w27de")
@@ -61,6 +62,14 @@ size_flags_vertical = 8
 text = "100%"
 label_settings = SubResource("LabelSettings_fpmwk")
 vertical_alignment = 2
+
+[node name="AmmoLabel" type="Label" parent="HUD" unique_id=2081599631]
+offset_left = 1078.0
+offset_top = 619.0
+offset_right = 1173.0
+offset_bottom = 695.0
+theme_override_font_sizes/font_size = 45
+text = "0/30"
 
 [node name="Enemies" type="Node" parent="." unique_id=2021581775]
 
@@ -196,5 +205,29 @@ transform = Transform3D(1.12202, 1.39419, -2.40776, 1.53922, 1.85165, 1.78946, 2
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="effects" unique_id=1382836120]
 
+[node name="gameoverUI" type="CanvasLayer" parent="." unique_id=855927829]
+process_mode = 3
+visible = false
+script = ExtResource("13_trceg")
+
+[node name="Panel" type="Panel" parent="gameoverUI" unique_id=1076921656]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="gameoverUI" unique_id=1439487953]
+offset_left = 574.0
+offset_top = 275.0
+offset_right = 680.0
+offset_bottom = 310.0
+text = "GAME OVER"
+
+[node name="restart" type="Button" parent="gameoverUI" unique_id=355782939]
+offset_left = 496.0
+offset_top = 416.0
+offset_right = 775.0
+offset_bottom = 578.0
+text = "Resart"
+
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
 [connection signal="timeout" from="Enemies/enemies_spawner/Timer" to="Enemies/enemies_spawner" method="_on_timer_timeout"]
+[connection signal="pressed" from="gameoverUI/restart" to="gameoverUI" method="_on_restart_pressed"]
