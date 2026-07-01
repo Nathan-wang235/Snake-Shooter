@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bvx5cvigosg0s" path="res://objects/platform_large_grass.tscn" id="7_wggef"]
 [ext_resource type="PackedScene" uid="uid://d2g78tpqbyf5g" path="res://objects/enemy.tscn" id="8_7ty2f"]
 [ext_resource type="PackedScene" uid="uid://oqfhfp1a80qd" path="res://objects/cloud.tscn" id="10_5ksau"]
+[ext_resource type="MeshLibrary" uid="uid://d02hkqih5t5kn" path="res://Export/MeshLibrary_1.tres" id="13_a8y0u"]
 [ext_resource type="Script" uid="uid://c3b1l0a8ou3h8" path="res://scenes/gameover_ui.gd" id="13_trceg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fpmwk"]
@@ -18,6 +19,8 @@ font = ExtResource("3_w27de")
 font_size = 36
 outline_size = 12
 outline_color = Color(0, 0, 0, 0.470588)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_trceg"]
 
 [node name="Main" type="Node3D" unique_id=1176673032]
 
@@ -182,6 +185,15 @@ offset_top = 416.0
 offset_right = 775.0
 offset_bottom = 578.0
 text = "Resart"
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1693031075]
+mesh_library = ExtResource("13_a8y0u")
+physics_material = SubResource("PhysicsMaterial_trceg")
+cell_size = Vector3(1, 0.1, 1)
+data = {
+"cells": PackedInt32Array(-1245197, 22, 9, -1245197, 23, 9, -1245197, 24, 9, -1245197, 25, 9, -1245197, 26, 9, -1245197, 27, 9, -1245197, 28, 9, -1245197, 29, 9, -1245197, 30, 9, -1245196, 22, 9, -1245196, 23, 9, -1245196, 24, 9, -1245196, 25, 9, -1245196, 26, 9, -1245196, 27, 9, -1245196, 28, 9, -1245196, 29, 9, -1245196, 30, 9, -1245195, 22, 9, -1245195, 23, 9, -1245195, 24, 9, -1245195, 25, 9, -1245195, 26, 9, -1245195, 27, 9, -1245195, 28, 9, -1245195, 29, 9, -1245195, 30, 9, -1245194, 22, 9, -1245194, 23, 9, -1245194, 24, 9, -1245194, 25, 9, -1245194, 26, 9, -1245194, 27, 9, -1245194, 28, 9, -1245194, 29, 9, -1245194, 30, 9, -1245193, 22, 9, -1245193, 23, 9, -1245193, 24, 9, -1245193, 25, 9, -1245193, 26, 9, -1245193, 27, 9, -1245193, 28, 9, -1245193, 29, 9, -1245193, 30, 9, -1245192, 22, 9, -1245192, 23, 9, -1245192, 24, 9, -1245192, 25, 9, -1245192, 26, 9, -1245192, 27, 9, -1245192, 28, 9, -1245192, 29, 9, -1245192, 30, 9, -1245191, 22, 9, -1245191, 23, 9, -1245191, 24, 9, -1245191, 25, 9, -1245191, 26, 9, -1245191, 27, 9, -1245191, 28, 9, -1245191, 29, 9, -1245191, 30, 9, -1245190, 22, 9, -1245190, 23, 9, -1245190, 24, 9, -1245190, 25, 9, -1245190, 26, 9, -1245190, 27, 9, -1245190, 28, 9, -1245190, 29, 9, -1245190, 30, 9, -1245189, 22, 9, -1245189, 23, 9, -1245189, 24, 9, -1245189, 25, 9, -1245189, 26, 9, -1245189, 27, 9, -1245189, 28, 9, -1245189, 29, 9, -1245189, 30, 9, -1245188, 22, 9, -1245188, 23, 9, -1245188, 24, 9, -1245188, 25, 9, -1245188, 26, 9, -1245188, 27, 9, -1245188, 28, 9, -1245188, 29, 9, -1245188, 30, 9)
+}
+metadata/_editor_floor_ = Vector3(0, -20, 0)
 
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
 [connection signal="timeout" from="Enemies/enemies_spawner/Timer" to="Enemies/enemies_spawner" method="_on_timer_timeout"]
