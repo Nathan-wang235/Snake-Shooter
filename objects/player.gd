@@ -4,8 +4,9 @@ extends CharacterBody3D
 @export var movement_speed = 5
 @export var running_speed = 7
 @export_range(0, 100) var number_of_jumps: int = 2
-@export var jump_strength = 8
+@export var jump_strength = 9
 
+@onready var inventory = $Inventory
 @export_subgroup("Weapons")
 @export var weapons: Array[Weapon] = []
 
@@ -27,6 +28,7 @@ var is_crouching := false
 
 var input_mouse: Vector2
 
+var max_health: int = 150
 var health: int = 100
 var current_ammo: int 
 var reserve_ammo: int
@@ -79,6 +81,8 @@ func _process(delta):
 	velocity = applied_velocity
 	move_and_slide()
 	
+	if Input.is_action_just_pressed("use_item"):
+		inventory.use_item(0,self)
 	
 	# Rotation 
 	container.position = lerp(container.position, container_offset - (basis.inverse() * applied_velocity / 30), delta * 10)
@@ -356,3 +360,12 @@ func _on_restart_button_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	
+func heal(amount):
+
+	health += amount
+	if health > max_health:
+		health = max_health
+	health_updated.emit(health)
+
+	print("当前生命：", health)
+	print("heal()里的health =", health)

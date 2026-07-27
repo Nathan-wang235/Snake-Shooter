@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://byriusgds2yfl"]
+
+[ext_resource type="Script" uid="uid://kupm3evqeo1v" path="res://scripts/bengda1.gd" id="1_12esc"]
+
+[resource]
+script = ExtResource("1_12esc")
+metadata/_custom_type_script = "uid://chpa0ytqweu2n"
