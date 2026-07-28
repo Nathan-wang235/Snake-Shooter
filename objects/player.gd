@@ -349,6 +349,10 @@ func damage(amount):
 	
 	if health <= 0:
 		game_over_screen.visible = true
+		
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		mouse_captured = false
+		
 		get_tree().paused = true # Reset when out of health
 
 # Create a random knockback vector
@@ -358,14 +362,20 @@ static func random_vec2(_min: Vector2, _max: Vector2) -> Vector2:
 
 func _on_restart_button_pressed():
 	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	get_tree().reload_current_scene()
 	
 func heal(amount):
 
-	health += amount
+	health += amount     
 	if health > max_health:
 		health = max_health
 	health_updated.emit(health)
 
 	print("当前生命：", health)
 	print("heal()里的health =", health)
+	
+func game_over():
+	$CanvasLayer/GameOverUI.show()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().paused = true

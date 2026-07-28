@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://oqfhfp1a80qd" path="res://objects/cloud.tscn" id="10_5ksau"]
 [ext_resource type="MeshLibrary" uid="uid://d02hkqih5t5kn" path="res://Export/MeshLibrary_1.tres" id="13_a8y0u"]
 [ext_resource type="Script" uid="uid://c3b1l0a8ou3h8" path="res://scenes/gameover_ui.gd" id="13_trceg"]
+[ext_resource type="Script" uid="uid://dnbhpt2nk4ncf" path="res://scenes/bengdai_pickup.gd" id="15_jbj1t"]
+[ext_resource type="Resource" uid="uid://byriusgds2yfl" path="res://objects/bengdai.tres" id="16_muem4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fpmwk"]
 font = ExtResource("3_w27de")
@@ -188,7 +190,7 @@ offset_left = 496.0
 offset_top = 416.0
 offset_right = 775.0
 offset_bottom = 578.0
-text = "Resart"
+text = "Restart"
 
 [node name="GridMap" type="GridMap" parent="." unique_id=1693031075]
 mesh_library = ExtResource("13_a8y0u")
@@ -199,6 +201,18 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, -20, 0)
 
+[node name="Bengdai_pickup" type="Area3D" parent="." unique_id=1326932899]
+script = ExtResource("15_jbj1t")
+item = ExtResource("16_muem4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bengdai_pickup" unique_id=1298569042]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bengdai_pickup" unique_id=390192168]
+
+[node name="Label3D" type="Label3D" parent="Bengdai_pickup" unique_id=1958443846]
+
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
 [connection signal="timeout" from="Enemies/enemies_spawner/Timer" to="Enemies/enemies_spawner" method="_on_timer_timeout"]
 [connection signal="pressed" from="gameoverUI/restart" to="gameoverUI" method="_on_restart_pressed"]
+[connection signal="body_entered" from="Bengdai_pickup" to="Bengdai_pickup" method="_on_body_entered"]
+[connection signal="body_exited" from="Bengdai_pickup" to="Bengdai_pickup" method="_on_body_exited"]
