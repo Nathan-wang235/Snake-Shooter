@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl2ed4gkybggf"]
+[gd_scene format=3 uid="uid://dl2ed4gkybggf"]
 
 [ext_resource type="Script" uid="uid://cu47grjp072jk" path="res://objects/player.gd" id="1_ffboj"]
 [ext_resource type="Resource" uid="uid://cu2gtxlcmbb34" path="res://weapons/blaster-repeater.tres" id="2_6epbw"]
@@ -12,24 +12,24 @@
 radius = 0.3
 height = 1.0
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=1139479904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1_ffboj")
 weapons = Array[ExtResource("2_i825w")]([ExtResource("3_kr4p8"), ExtResource("2_6epbw")])
 
-[node name="Collider" type="CollisionShape3D" parent="."]
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=1184672285]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 shape = SubResource("CapsuleShape3D_gdq8c")
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Head" type="Node3D" parent="." unique_id=966209299]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Camera" type="Camera3D" parent="Head"]
+[node name="Camera" type="Camera3D" parent="Head" unique_id=1694413811]
 cull_mask = 1048573
 current = true
 fov = 80.0
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera" unique_id=1124607455]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -37,42 +37,42 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer" unique_id=1088084804]
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
 size = Vector2i(1280, 720)
 render_target_update_mode = 4
 
-[node name="CameraItem" type="Camera3D" parent="Head/Camera/SubViewportContainer/SubViewport"]
+[node name="CameraItem" type="Camera3D" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=859966204]
 cull_mask = 1047554
 fov = 40.0
 
-[node name="Container" type="Node3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem"]
+[node name="Container" type="Node3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem" unique_id=200007617]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -1, -2.25)
 
-[node name="Muzzle" type="AnimatedSprite3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem"]
+[node name="Muzzle" type="AnimatedSprite3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem" unique_id=90231196]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.75, -6)
 layers = 2
 sprite_frames = ExtResource("4_m6ukc")
 frame = 2
 
-[node name="RayCast" type="RayCast3D" parent="Head/Camera"]
+[node name="RayCast" type="RayCast3D" parent="Head/Camera" unique_id=1632001299]
 exclude_parent = false
 target_position = Vector3(0, 0, -10)
 collide_with_areas = true
 
-[node name="Shadow" type="Decal" parent="."]
+[node name="Shadow" type="Decal" parent="." unique_id=2039177736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
 size = Vector3(1, 2, 1)
 texture_albedo = ExtResource("2_b0fo8")
 modulate = Color(1, 1, 1, 0.705882)
 normal_fade = 0.5
 
-[node name="SoundFootsteps" type="AudioStreamPlayer" parent="."]
+[node name="SoundFootsteps" type="AudioStreamPlayer" parent="." unique_id=1502176947]
 stream = ExtResource("5_ics1s")
 volume_db = -5.0
 autoplay = true
 
-[node name="Cooldown" type="Timer" parent="."]
+[node name="Cooldown" type="Timer" parent="." unique_id=533512860]
 one_shot = true
