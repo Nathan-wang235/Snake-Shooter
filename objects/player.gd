@@ -325,7 +325,7 @@ func change_weapon():
 	
 	# Step 2. Place new weapon model in container
 	
-	var weapon_model = weapon.model.instantiate()
+	var weapon_model = weapon.model.instwantiate()
 	container.add_child(weapon_model)
 	
 	weapon_model.position = weapon.position
