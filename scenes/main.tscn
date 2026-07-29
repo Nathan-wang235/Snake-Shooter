@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://oqfhfp1a80qd" path="res://objects/cloud.tscn" id="10_5ksau"]
 [ext_resource type="MeshLibrary" uid="uid://d02hkqih5t5kn" path="res://Export/MeshLibrary_1.tres" id="13_a8y0u"]
 [ext_resource type="Script" uid="uid://c3b1l0a8ou3h8" path="res://scenes/gameover_ui.gd" id="13_trceg"]
-[ext_resource type="Script" uid="uid://dnbhpt2nk4ncf" path="res://scenes/bengdai_pickup.gd" id="15_jbj1t"]
+[ext_resource type="Script" path="res://scenes/bengdai_pickup.gd" id="15_jbj1t"]
 [ext_resource type="Resource" uid="uid://byriusgds2yfl" path="res://objects/bengdai.tres" id="16_muem4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fpmwk"]
