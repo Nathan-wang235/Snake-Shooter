@@ -2,15 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://2jld33y6h5pq" path="res://sprites/crosshair.png" id="1_2onsr"]
 [ext_resource type="Script" uid="uid://dg01pkkc1c5vd" path="res://scripts/weapon.gd" id="2_107w7"]
-
-[sub_resource type="Resource" id="Resource_g7kgc"]
-metadata/__load_path__ = "res://models/gun.glb"
+[ext_resource type="PackedScene" uid="uid://db8jkld60v5yh" path="res://models/hot dog 2gun.glb" id="2_uworq"]
 
 [resource]
 script = ExtResource("2_107w7")
-model = SubResource("Resource_g7kgc")
+model = ExtResource("2_uworq")
 position = Vector3(-1, 0, 0)
-muzzle_position = Vector3(0.1, -0.4, 1.5)
 cooldown = 0.25
 spread = 1.0
 shot_count = 3
